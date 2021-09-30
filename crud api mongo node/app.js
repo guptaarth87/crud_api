@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const PORT=1212;
 const routes = require('./Routes/index.js');
 
+require('dotenv').config();
 // initialise the libraries
 app.use(bodyParser.json());
 
@@ -21,14 +22,14 @@ app.use((req, res, next) => {
 });
 
 
-
+ 
 app.use('/',routes);
 
 
 
 // connect to the mongoDB
 mongoose.connect(
-    'mongodb+srv://arthgupta:arthgupta861@cluster0.wg02p.mongodb.net/studentTeacherApi?retryWrites=true&w=majority', 
+    process.env.MONGO_URL, 
     {
         useNewUrlParser: true,
         useUnifiedTopology: true,

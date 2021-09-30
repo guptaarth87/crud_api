@@ -18,6 +18,22 @@ exports.getAllTeachers = (req, res) => {
     });
 }
 
+exports.getTeacher=(req,res)=>{
+    Teacher.find({
+
+    }).then(result=>{
+        res.status(200).json({
+            message:"request successfull",
+            teacher:result
+        })
+    }).catch(err=>{
+        res.status(500).json({
+            message:"data not available error!",
+            error:err
+        });
+    })
+}
+
 exports.addNewTeacher = (req, res) => {
     const{
         teacher_id,
@@ -74,38 +90,19 @@ exports.deleteTeacher = (req, res) => {
 }
 
 exports.updateTeacher = (req, res) => {
-
     const teacherName = req.params.name;
-    Teacher.find({
-        name: teacherName
-    }).then(result=>{
-        id=result[0].id
-        Teacher.findByIdAndUpdate(id,req.body ,(err,result)=>{
-            if(err){
-                return res
-                .status(500)
-                .send({error: "Problem with updating the data"})
-            }
-            res.send({success:"updation successfull !"});
-        })      
+ Teacher.find({
+     name: teacherName
+ }).then(result=>{
+   const  id=result[0].id
+    Teacher.findByIdAndUpdate({ _id: id }, req.body)
+    .then((data) => {
+      res.send("updated Successfully");
     })
+    .catch((err) => {
+      res.send("err in updation");
+    });
+ })
  }
 
-
-  // if(!req.body){
-    //     return res.status(400).send({
-    //         message:"data to update cannot be empty !"
-    //     })
-    // }else{
-    //     const teacherName = req.params.name;
-    //     Teacher.find({
-    //     name: teacherName
-    // }).then(result=>{
-    //     id=result[0].id
-    //     Teacher.findOneAndUpdate({_id: id},req.body).then(function(teacher){
-    //         Teacher.findOne({_id: id}).then(function(teacher){
-    //             res.send(teacher);
-    //         });
-    //     });
-    // });
 

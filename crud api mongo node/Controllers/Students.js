@@ -17,6 +17,23 @@ exports.getAllStudents = (req, res) => {
     });
 }
 
+exports.getStudent=(req,res)=>{
+     const studentName=req.params.name;
+     Students.find({
+         name:studentName
+     }).then(result=>{
+         res.status(200).json({
+             message:"request successfull",
+             student:result
+         });
+     }).catch(err=>{
+         res.status(500).json({
+             message:"data not available error!",
+             error:err
+         })
+     })
+}
+
 exports.addNewStudent = (req, res) => {
     //fetching details
     const{                      
@@ -79,6 +96,17 @@ exports.deleteStudent = (req, res) => {
 
 exports.updateStudent = (req, res) => {
     const studentName = req.params.name;
-
+    Students.find({
+        name: teacherName
+    }).then(result=>{
+      const  id=result[0].id
+       Students.findByIdAndUpdate({ _id: id }, req.body)
+       .then((data) => {
+         res.send("updated Successfully");
+       })
+       .catch((err) => {
+         res.send("err in updation");
+       });
+    })
 }
 

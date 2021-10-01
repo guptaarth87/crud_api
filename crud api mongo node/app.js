@@ -1,8 +1,11 @@
+//importing require modules
 const express = require('express');
 const bodyParser=require('body-parser')
 const app=express();
 
 const mongoose = require('mongoose')
+
+//Defining a manual port to run on local machine
 const PORT=1212;
 const routes = require('./Routes/index.js');
 
@@ -22,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 
- 
+//Using another file routes for managing routing
 app.use('/',routes);
 
 
